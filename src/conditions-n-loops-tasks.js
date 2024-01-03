@@ -116,8 +116,42 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+const templateRoman = {
+  1: 'I',
+  2: 'II',
+  3: 'III',
+  4: 'IV',
+  5: 'V',
+  6: 'VI',
+  7: 'VII',
+  8: 'VIII',
+  9: 'IX',
+};
+function convertToRomanNumerals(num) {
+  let result;
+
+  if (num) {
+    const str = `${num}`;
+
+    if (num === 10) {
+      result = 'X';
+    }
+
+    if (str.length === 2 && num !== 10) {
+      let repeatedString = '';
+      for (let i = 0; i < +str[0]; i += 1) {
+        repeatedString += 'X';
+      }
+      result = repeatedString + templateRoman[str[1]];
+    }
+
+    if (str.length === 1) {
+      result = templateRoman[str[0]];
+    }
+  } else {
+    result = 'Invalid input. Please enter a number between 1 and 39.';
+  }
+  return result;
 }
 
 /**
@@ -135,8 +169,42 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+const templateNumber = {
+  0: 'zero',
+  1: 'one',
+  2: 'two',
+  3: 'three',
+  4: 'four',
+  5: 'five',
+  6: 'six',
+  7: 'seven',
+  8: 'eight',
+  9: 'nine',
+  '-': 'minus',
+  '.': 'point',
+  ',': 'point',
+};
+const convertFunction = (numberStr) => {
+  let result = '';
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    if (templateNumber[numberStr[i]]) {
+      result += `${templateNumber[numberStr[i]]}`;
+      if (i !== numberStr.length - 1) {
+        result += ' ';
+      }
+    }
+  }
+  return result;
+};
+
+function convertNumberToString(numberStr) {
+  switch (numberStr.length) {
+    case 1:
+      return templateNumber[numberStr[0]];
+    default:
+      return convertFunction(numberStr);
+  }
 }
 
 /**
